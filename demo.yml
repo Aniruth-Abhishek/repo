@@ -1,0 +1,41 @@
+# stldigital-openai-project
+
+resources:
+- name: stldigital-instance
+  type: compute.v1.instance
+  properties:
+    zone: your-zone  # Replace with your zone
+    machineType:  projects/stldigital-openai-project/zones/Zone-name/machineTypes/e2-standard-4 # Replace the zone name
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: projects/debian-cloud/global/images/debian-10-buster-v20230524
+    networkInterfaces:
+    - network: projects/stldigital-openai-project/global/networks/your-custom-network  # Replace with your VPC 
+      subnetwork: projects/stldigital-openai-project/regions/your-region/subnetworks/your-custom-subnet # Replace with your subnet 
+      accessConfigs:
+      - name: external-nat
+        type: ONE_TO_ONE_NAT
+    tags:
+    - allow-ssh
+    - allow-5000
+    - allow-8000
+    - allow-http
+    - allow-https
+
+    serviceAccounts:
+    - email: default
+      scopes:
+      - https://www.googleapis.com/auth/cloud-platform
+    guestAccelerators:
+    - acceleratorType: "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/licenses/nvidia-tesla-t4"
+      acceleratorCount: 1
+    scheduling:
+      automaticRestart: false
+      onHostMaintenance: "TERMINATE"
+    minCpuPlatform: "Automatic"
+    displayDevice:
+      enableDisplay: false

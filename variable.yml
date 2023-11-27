@@ -1,0 +1,9 @@
+####VPC-VARIABLE####
+vpcName: my-custom-vpc
+vpcCidr: 10.0.0.0/16
+#####Subnet-Variable####
+subnetName: my-custom-subnet
+subnetCidr: 10.0.1.0/24
+#####VM instance-variable#####
+machineType: n1-standard-2
+image: projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20220112

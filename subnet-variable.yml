@@ -1,0 +1,10 @@
+imports:
+- path: variable.yml
+
+- name: my-subnet
+  type: compute.v1.subnetwork
+  properties:
+    network: $(ref.my-vpc.selfLink)
+    ipCidrRange: {{ properties.subnetCidr }}
+    name: {{ properties.subnetName }}
+    region: us-central1

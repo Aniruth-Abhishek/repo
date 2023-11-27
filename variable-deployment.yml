@@ -1,0 +1,9 @@
+vpcName: my-vpc
+subnetName: my-subnet
+subnetCidrRange: 10.0.1.0/24
+region: us-central1
+project: stl-training
+clusterName: my-gke-cluster
+nodeCount: 3
+machineType: n1-standard-2
+

@@ -1,0 +1,11 @@
+imports:
+- path: variable.yml
+
+resources:
+- name: my-vpc
+  type: compute.v1.network
+  properties:
+    autoCreateSubnetworks: false
+    name: {{ properties.vpcName }}
+    routingConfig:
+      routingMode: REGIONAL

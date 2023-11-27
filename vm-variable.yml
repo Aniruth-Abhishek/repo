@@ -1,0 +1,25 @@
+imports:
+- path: variable.yml
+
+- name: my-vm-instance
+  type: compute.v1.instance
+  properties:
+    zone: us-central1-a
+    machineType: zones/us-central1-a/machineTypes/{{ properties.machineType }}
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: {{ properties.image }}
+    networkInterfaces:
+    - network: $(ref.my-vpc.selfLink)
+      subnetwork: $(ref.my-subnet.selfLink)
+      accessConfigs:
+      - name: External NAT
+        type: ONE_TO_ONE_NAT
+    metadata:
+      items:
+      - key: startup-script
+        value: "#!/bin/bash\n# Your startup script here"

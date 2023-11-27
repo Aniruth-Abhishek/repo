@@ -1,0 +1,30 @@
+imports:
+  - path: variable-deployment.yml
+
+resources:
+  - name: my-vpc
+    type: gcp-types/compute-v1:network
+    properties:
+      name: $(vpcName)
+      routingConfig:
+        routingMode: REGIONAL
+
+  - name: my-subnet
+    type: gcp-types/compute-v1:subnetwork
+    properties:
+      name: $(subnetName)
+      network: $(ref.my-vpc.selfLink)
+      ipCidrRange: $(subnetCidrRange)
+      region: $(region)
+
+  - name: my-gke-cluster
+    type: gcp-types/container-v1:projects.locations.clusters
+    properties:
+      parent: projects/$(project)/locations/$(region)
+      cluster:
+        name: $(clusterName)
+        initialNodeCount: $(nodeCount)
+        nodeConfig:
+          machineType: $(machineType)
+        network: $(ref.my-vpc.selfLink)
+        subnetwork: $(ref.my-subnet.selfLink)
